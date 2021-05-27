@@ -1,4 +1,4 @@
-# XXX pages
+# Area of Oustanding Natural Beauty pages
 
 We recommend working in [virtual environment](http://docs.python-guide.org/en/latest/dev/virtualenvs/) before installing the python [requirements](requirements.txt), [makerules](https://github.com/digital-land/makerules) and other dependencies:
 
@@ -8,7 +8,7 @@ We recommend working in [virtual environment](http://docs.python-guide.org/en/la
 
 # Nightly
 
-These pages are [updated nightly](https://github.com/digital-land/YYY/actions) by the [GitHub Action](.github/workflows/run.yml).
+These pages are [updated nightly](https://github.com/digital-land/area-of-outstanding-natural-beauty/actions) by the [GitHub Action](.github/workflows/run.yml).
 
 # Licence
 
