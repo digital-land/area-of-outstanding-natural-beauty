@@ -155,23 +155,23 @@ crossorigin="" />
 <div class="govuk-grid-row">    <div class="govuk-grid-column-two-thirds"><article class="data-record govuk-!-margin-bottom-6">
     <h4 class="govuk-heading-s data-record__identifier">#/area-of-outstanding-natural-beauty/area-of-outstanding-natural-beauty/11</h4>
     <dl class="govuk-summary-list data-record__properties">            <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">start-date
+            <dt class="govuk-summary-list__key">Start date
             </dt>
             <dd class="govuk-summary-list__value">                2063-09-01            </dd>
         </div>        <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">documentation-url
-            </dt>
-            <dd class="govuk-summary-list__value">                <a class="govuk-link" href="http://www.landscapesforlife.org.uk/about-aonbs/visit-aonbs/east-devon-aonb">http://www.landscapesforlife.org.uk/about-aonbs/visit-aonbs/east-devon-aonb</a>            </dd>
-        </div>        <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">name
+            <dt class="govuk-summary-list__key">Name
             </dt>
             <dd class="govuk-summary-list__value">                East Devon            </dd>
         </div>        <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">geography
+            <dt class="govuk-summary-list__key">Documentation URL
+            </dt>
+            <dd class="govuk-summary-list__value">                <a class="govuk-link" href="http://www.landscapesforlife.org.uk/about-aonbs/visit-aonbs/east-devon-aonb">http://www.landscapesforlife.org.uk/about-aonbs/visit-aonbs/east-devon-aonb</a>            </dd>
+        </div>        <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Geography
             </dt>
             <dd class="govuk-summary-list__value">                area-of-outstanding-natural-beauty:11            </dd>
         </div>        <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">entry-date
+            <dt class="govuk-summary-list__key">Entry date
             </dt>
             <dd class="govuk-summary-list__value">                2021-05-25            </dd>
         </div>    
@@ -186,7 +186,7 @@ crossorigin="" />
     class="dl-map govuk-!-margin-top-4"
     id="dlMap"
     data-module="boundary-map"
-    style="height: 460px;" data-geojson-urls="geometry.geojson"   
+    style="height: 460px;"   
 >
     <noscript>To view this map, you need to enable JavaScript.</noscript>
 </div>
@@ -213,21 +213,20 @@ crossorigin="" />
             <th>entry-date</th>
             <th>resource</th>
             <th>line</th>
-            <th>start-date</th>
             <th>documentation-url</th>
-            <th>geography</th>
             <th>name</th>
+            <th>geography</th>
             <th>geometry</th>
+            <th>start-date</th>
         </tr>
     </thead>
     <tbody>        <tr>
             <td>2021-05-25</td>
             <td><a href="https://github.com/digital-land/area-of-outstanding-natural-beauty-collection/tree/main/transformed/area-of-outstanding-natural-beauty/4b547b34097e08ee4a41df14429738870c4d0f2b09cd2669f3cbde96e6949fba.csv#L2">4b547b34097e...</a></td>
             <td>1</td>
-                <td>2063-09-01</td> 
                 <td>http://www.landscapesforlife.org.uk/about-aonbs/visit-aonbs/east-devon-aonb</td> 
-                <td>area-of-outstanding-natural-beauty:11</td> 
                 <td>East Devon</td> 
+                <td>area-of-outstanding-natural-beauty:11</td> 
                 <td class="data-table__notes-cell data-table__cell--min-width-4">
                     <details class="govuk-details">
   <summary class="govuk-details__summary">
@@ -240,6 +239,7 @@ crossorigin="" />
   </div>
 </details>
                 </td>
+                <td>2063-09-01</td> 
         </tr>    </tbody>
 </table>
 
@@ -348,21 +348,25 @@ crossorigin="" />
     const datasetName = "area-of-outstanding-natural-beauty"
     const $mapElement = document.querySelector('[data-module="boundary-map"]')
     const $nationalMapLink = document.querySelector('.dl-link-national-map')
-    const mapComponent = new DLMaps.Map($mapElement).init({
-        initZoomCallback: function (featureGroup) {
-            console.log("initial load completed")
-            // do we need to check there isn't more than one shape?
-            const center = featureGroup.getBounds().getCenter()
-            const zoom = mapComponent.map.getZoom()
-            let url = `http://digital-land.github.io/map?layer=${datasetName}#${center.lat},${center.lng},${zoom}z`
-            console.log(url)
-            if ($nationalMapLink) {
-                // only show this for the datasets we've added to the national map
-                $nationalMapLink.href = url
-                $nationalMapLink.classList.remove("js-hidden")
-            }
-        }
-    })
+    const mapParams = {
+    initZoomCallback: function (featureGroup, map) {
+          console.log("initial load completed")
+          // do we need to check there isn't more than one shape?
+          const center = featureGroup.getBounds().getCenter()
+          const zoom = map.getZoom()
+          let url = `http://digital-land.github.io/map?layer=${datasetName}#${center.lat},${center.lng},${zoom}z`
+          console.log(url)
+          if ($nationalMapLink) {
+              // only show this for the datasets we've added to the national map
+              $nationalMapLink.href = url
+              $nationalMapLink.classList.remove("js-hidden")
+          }
+      }
+    }
+
+    mapParams.geojsonURLs = ["geometry.geojson"]
+
+    const mapComponent = new DLMaps.Map($mapElement).init(mapParams)
 </script>
 <script>
     // Initialise back to top
